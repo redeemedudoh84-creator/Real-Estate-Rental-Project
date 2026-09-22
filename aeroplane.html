@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CSS Aeroplane ✈️</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 12%,
+                #6cbcf5 0%, #3382ca 32%, #14406f 68%, #07182b 100%);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  /* ---------------- CLOUDS ---------------- */
+  .cloud {
+    position: fixed;
+    left: -200px;
+    width: 140px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    filter: blur(3px);
+    pointer-events: none;
+    animation: drift linear infinite;
+  }
+  .cloud::before,
+  .cloud::after {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+  .cloud::before { width: 62px; height: 62px; top: -28px; left: 16px; }
+  .cloud::after  { width: 44px; height: 44px; top: -18px; right: 18px; }
+
+  .cloud:nth-child(1) { top:  6%; animation-duration: 46s; animation-delay:  -4s; }
+  .cloud:nth-child(2) { top: 22%; animation-duration: 64s; animation-delay: -38s; opacity: .55; width: 200px; height: 60px; }
+  .cloud:nth-child(3) { top: 44%; animation-duration: 54s; animation-delay: -20s; opacity: .45; }
+  .cloud:nth-child(4) { top: 66%; animation-duration: 72s; animation-delay: -55s; opacity: .50; width: 180px; height: 52px; }
+  .cloud:nth-child(5) { top: 84%; animation-duration: 50s; animation-delay: -12s; opacity: .35; }
+  .cloud:nth-child(6) { top: 34%; animation-duration: 84s; animation-delay: -66s; opacity: .28; width: 220px; height: 64px; }
+
+  @keyframes drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(100vw + 420px)); }
+  }
+
+  /* ---------------- SCENE ---------------- */
+  .scene {
+    position: relative;
+    z-index: 1;
+    width: 420px;
+    height: 480px;
+  }
+
+  .plane {
+    position: absolute;
+    inset: 0;
+    filter: drop-shadow(0 26px 22px rgba(0, 0, 0, 0.35));
+    animation: float 5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(-10px) rotate(-2deg); }
+    50%      { transform: translateY(10px)  rotate(2deg);  }
+  }
+
+  /* ---------------- WINGS ---------------- */
+  .wing {
+    position: absolute;
+    top: 150px;
+    width: 165px;
+    height: 150px;
+    z-index: 1;
+    background: linear-gradient(180deg,
+                #ffffff 0%, #e8eef7 28%, #c9d4e2 72%, #9fabbd 100%);
+    clip-path: polygon(0 0, 100% 45%, 100% 100%, 0 100%);
+    border-radius: 0 10px 10px 0;
+  }
+  .wing.right { left: 236px; }
+  .wing.left  { left:  19px; transform: scaleX(-1); }
+
+  /* ---------------- TAIL WINGS ---------------- */
+  .tail {
+    position: absolute;
+    top: 340px;
+    width: 95px;
+    height: 90px;
+    z-index: 1;
+    background: linear-gradient(180deg, #f2f6fb 0%, #cfd9e6 60%, #a8b4c6 100%);
+    clip-path: polygon(0 0, 100% 32%, 100% 100%, 0 100%);
+    border-radius: 0 6px 6px 0;
+  }
+  .tail.right { left: 238px; }
+  .tail.left  { left:  87px; transform: scaleX(-1); }
+
+  /* ---------------- ENGINES ---------------- */
+  .engine {
+    position: absolute;
+    top: 168px;
+    width: 36px;
+    height: 132px;
+    z-index: 2;
+    border-radius: 18px / 24px;
+    background: linear-gradient(90deg,
+                #6f7b8d 0%, #c6d0de 24%, #f6f9fd 46%,
+                #c2ccda 70%, #66718a 100%);
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.28);
+  }
+  .engine.left  { left: 125px; }
+  .engine.right { left: 259px; }
+
+.engine span {
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 30%, #2b3446 0%, #0a1120 75%);
+  box-shadow:
+    inset 0 0 0 2px #b3bfd0,
+    inset 0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+  /* ---------------- FUSELAGE ---------------- */
+  .fuselage {
+    position: absolute;
+    left: 172px;
+    top: 20px;
+    width: 76px;
+    height: 420px;
+    z-index: 3;
+    border-radius: 38px 38px 30px 30px / 82px 82px 46px 46px;
+    background: linear-gradient(90deg,
+                #8693a6 0%,  #c7d1de 12%, #f8fbff 38%,
+                #ffffff 50%, #e2e9f2 62%, #a9b5c6 88%, #7a879a 100%);
+  }
+
+  /* cockpit glass */
+  .cockpit {
+    position: absolute;
+    left: 50%;
+    top: 46px;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 27px;
+    border-radius: 50% 50% 36% 36% / 72% 72% 30% 30%;
+    background: linear-gradient(180deg, #43617f 0%, #1a2c44 60%, #0e1c2e 100%);
+    box-shadow: inset 0 -3px 6px rgba(255, 255, 255, 0.28),
+                0 1px 3px rgba(0, 0, 0, 0.25);
+  }
+
+  /* passenger windows */
+  .windows {
+    position: absolute;
+    left: 50%;
+    top: 112px;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 238px;
+    background-image: radial-gradient(circle at 50% 50%,
+                      #2a3b55 0 4.5px, transparent 5px);
+    background-size: 16px 34px;
+    background-repeat: repeat-y;
+    opacity: .9;
+  }
+
+  /* ---------------- WINGTIP LIGHTS ---------------- */
+  .light {
+    position: absolute;
+    top: 254px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    z-index: 4;
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  .light.red {
+    left: 15px;
+    background: #ff4d4d;
+    box-shadow: 0 0 12px 3px rgba(255, 77, 77, 0.85);
+  }
+  .light.green {
+    left: 396px;
+    background: #4dff96;
+    box-shadow: 0 0 12px 3px rgba(77, 255, 150, 0.85);
+    animation-delay: .8s;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: .25; }
+  }
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width: 520px), (max-height: 620px) {
+    .scene { transform: scale(0.68); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- drifting clouds -->
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+
+  <!-- the aeroplane -->
+  <div class="scene">
+    <div class="plane">
+
+      <!-- main wings -->
+      <div class="wing left"></div>
+      <div class="wing right"></div>
+
+      <!-- tail wings -->
+      <div class="tail left"></div>
+      <div class="tail right"></div>
+
+      <!-- engines -->
+      <div class="engine left"><span></span></div>
+      <div class="engine right"><span></span></div>
+
+      <!-- wingtip navigation lights -->
+      <div class="light red"></div>
+      <div class="light green"></div>
+
+      <!-- fuselage + details -->
+      <div class="fuselage">
+        <div class="cockpit"></div>
+        <div class="windows"></div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
